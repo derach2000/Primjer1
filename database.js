@@ -2,7 +2,7 @@
 NetTalk Mobile Database
 ***/
 var database={
-  name: "sqldct",
+  name: "'Baza'",
   version:2,
   handle:{},
   open:0,
@@ -44,6 +44,36 @@ var database={
       },
       afterSync: function(){
       }
+    },
+    { name: "thisdevice",
+      syncproc: "syncthisdevice",
+      objectStore:{},
+      everythingafter:0,
+      primarykeyfield: "guid",
+      timestampfield: "ts",
+      servertimestampfield: "sts",
+      deletedtimestampfield: "dts",
+      indexes: [
+        {name:'tdh_timestampkey',unique: false, fields:["ts"]},
+        {name:'thd_servertimestampkey',unique: false, fields:["sts"]}
+      ],
+      relations: [
+      ],
+      record: {
+        guid:"",
+        sts:0,
+        ts:0,
+        dts:0,
+        clientdeviceid:"",
+        phonenumber:"",
+        password:"",
+        salt:"",
+        synchost:"",
+        lastsyncdate:0
+      },
+      afterSync: function(){
+          dbGet_thisdevice();
+      }
     }
   ],
   testtelefon:{
@@ -52,10 +82,18 @@ var database={
     view:  function(){idbSelect({table:database.tables[0],orderBy:'ts',oncomplete:function(resultset){idbShowResult(database.tables[0],resultset)}})},
     empty: function(){idbEmpty(database,database.tables[0]);}
   },
+  thisdevice:{
+    table: {},
+    record: {},
+    view:  function(){idbSelect({table:database.tables[1],orderBy:'ts',oncomplete:function(resultset){idbShowResult(database.tables[1],resultset)}})},
+    empty: function(){idbEmpty(database,database.tables[1]);}
+  },
   last:0
 };
 database.testtelefon.table = database.tables[0];
 database.testtelefon.record = database.tables[0].record;
+database.thisdevice.table = database.tables[1];
+database.thisdevice.record = database.tables[1].record;
 //------------------------
 var syncTimer;
 //------------------------
