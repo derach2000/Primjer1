@@ -3,7 +3,7 @@ NetTalk Mobile Database
 ***/
 var database={
   name: "!GLO:connectstring",
-  version:3,
+  version:2,
   handle:{},
   open:0,
   error:"",
