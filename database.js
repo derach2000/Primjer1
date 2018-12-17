@@ -2,7 +2,7 @@
 NetTalk Mobile Database
 ***/
 var database={
-  name: "!GLO:connectstring",
+  name: "sqldct",
   version:2,
   handle:{},
   open:0,
@@ -21,36 +21,6 @@ var database={
   onSyncCommsError:function(XMLHttpRequest, textStatus, errorThrown){
   },
   tables:[
-    { name: "customer",
-      syncproc: "synccustomer",
-      objectStore:{},
-      everythingafter:0,
-      primarykeyfield: "guid",
-      timestampfield: "ts",
-      servertimestampfield: "sts",
-      deletedtimestampfield: "dts",
-      indexes: [
-        {name:'cus_timestampkey',unique: false, fields:["ts"]},
-        {name:'cus_servertimestampkey',unique: false, fields:["sts"]}
-      ],
-      relations: [
-      ],
-      record: {
-        guid:"",
-        ts:0,
-        sts:0,
-        dts:0,
-        firstname:"",
-        lastname:"",
-        company:"",
-        phone:"",
-        email:"",
-        countrycode:"",
-        shipperguid:""
-      },
-      afterSync: function(){
-      }
-    },
     { name: "testtelefon",
       syncproc: "synctesttelefon",
       objectStore:{},
@@ -74,64 +44,18 @@ var database={
       },
       afterSync: function(){
       }
-    },
-    { name: "thisdevice",
-      syncproc: "syncthisdevice",
-      objectStore:{},
-      everythingafter:0,
-      primarykeyfield: "guid",
-      timestampfield: "ts",
-      servertimestampfield: "sts",
-      deletedtimestampfield: "dts",
-      indexes: [
-        {name:'tdh_timestampkey',unique: false, fields:["ts"]},
-        {name:'thd_servertimestampkey',unique: false, fields:["sts"]}
-      ],
-      relations: [
-      ],
-      record: {
-        guid:"",
-        sts:0,
-        ts:0,
-        dts:0,
-        clientdeviceid:"",
-        phonenumber:"",
-        password:"",
-        salt:"",
-        synchost:"",
-        lastsyncdate:0
-      },
-      afterSync: function(){
-          dbGet_thisdevice();
-      }
     }
   ],
-  customer:{
+  testtelefon:{
     table: {},
     record: {},
     view:  function(){idbSelect({table:database.tables[0],orderBy:'ts',oncomplete:function(resultset){idbShowResult(database.tables[0],resultset)}})},
     empty: function(){idbEmpty(database,database.tables[0]);}
   },
-  testtelefon:{
-    table: {},
-    record: {},
-    view:  function(){idbSelect({table:database.tables[1],orderBy:'ts',oncomplete:function(resultset){idbShowResult(database.tables[1],resultset)}})},
-    empty: function(){idbEmpty(database,database.tables[1]);}
-  },
-  thisdevice:{
-    table: {},
-    record: {},
-    view:  function(){idbSelect({table:database.tables[2],orderBy:'ts',oncomplete:function(resultset){idbShowResult(database.tables[2],resultset)}})},
-    empty: function(){idbEmpty(database,database.tables[2]);}
-  },
   last:0
 };
-database.customer.table = database.tables[0];
-database.customer.record = database.tables[0].record;
-database.testtelefon.table = database.tables[1];
-database.testtelefon.record = database.tables[1].record;
-database.thisdevice.table = database.tables[2];
-database.thisdevice.record = database.tables[2].record;
+database.testtelefon.table = database.tables[0];
+database.testtelefon.record = database.tables[0].record;
 //------------------------
 var syncTimer;
 //------------------------
